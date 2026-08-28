@@ -1,12 +1,19 @@
 import { HumanMessage } from "@langchain/core/messages";
-import { researchAgent } from "./agents/research-agent.js";
+import { supervisor } from "./agents/supervisor.js";
 
-const topic = process.argv[2] ?? "The rise of edge computing";
+const topic = process.argv[2];
+if (!topic) {
+    console.error('Usage: npm start -- "your topic here"');
+    process.exit(1);
+}
 
-console.log(`🔎 Researching: ${topic}\n`);
+console.log(`📰 Content Studio\n   Topic: ${topic}\n`);
+console.time("Total time");
 
-const result = await researchAgent.invoke({
-    messages: [new HumanMessage(`Research this topic: ${topic}`)],
-});
+const result = await supervisor.invoke(
+    { messages: [new HumanMessage(`Create a content package about: ${topic}`)] },
+    { recursionLimit: 50 } // 5 sub-agent calls + reasoning turns need headroom
+);
 
-console.log(result.messages.at(-1)?.content);
+console.timeEnd("Total time");
+console.log(`\n${result.messages.at(-1)?.content}`);

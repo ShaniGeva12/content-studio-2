@@ -1,16 +1,23 @@
 import { createAgent } from "langchain";
 import { TavilySearch } from "@langchain/tavily";
 import { model } from "../models.js";
-import {saveMarkdown} from "../tools/save-markdown.js";
+import { saveMarkdown } from "../tools/save-markdown.js";
 
 // Pre-built tool: web search designed for LLMs.
+// maxResults keeps responses focused (and cheap).
 const searchWeb = new TavilySearch({ maxResults: 5, name: "search_web" });
 
+
+/**
+ * Prompt anatomy: ROLE → TASK → OUTPUT CONTRACT → CONSTRAINTS.
+ * Template literals keep long prompts readable.
+ */
 const RESEARCH_PROMPT = `
 You are a senior research analyst for a technology publication.
 Your research is thorough, current, and always source-backed.
 
 ## Your task
+Given a topic:
 1. Run 2-3 web searches covering different angles of the topic
    (state of the art, real-world adoption, criticism/challenges).
 2. Synthesize the findings into a research brief.

@@ -1,7 +1,7 @@
 {
   "node_version": "24",
   "graphs": {
-    "agent": "./src/agents/research-agent.ts:researchAgent"
+    "agent": "./src/agents/supervisor.ts:supervisor"
   },
   "env": ".env",
   "dependencies": ["."]
