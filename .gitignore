@@ -2,3 +2,5 @@ node_modules/
 dist/
 .env
 output/
+# LangGraph API
+.langgraph_api
