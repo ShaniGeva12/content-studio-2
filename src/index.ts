@@ -1,7 +1,12 @@
-import 'dotenv/config';
-import {createAgent, initChatModel} from 'langchain';
-import {model} from "./models.js";
+import { HumanMessage } from "@langchain/core/messages";
+import { researchAgent } from "./agents/research-agent.js";
 
-const agent = createAgent({
-    model: model
+const topic = process.argv[2] ?? "The rise of edge computing";
+
+console.log(`🔎 Researching: ${topic}\n`);
+
+const result = await researchAgent.invoke({
+    messages: [new HumanMessage(`Research this topic: ${topic}`)],
 });
+
+console.log(result.messages.at(-1)?.content);
