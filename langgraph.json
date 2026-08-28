@@ -1,0 +1,8 @@
+{
+  "node_version": "24",
+  "graphs": {
+    "agent": "./src/agents/research-agent.ts:researchAgent"
+  },
+  "env": ".env",
+  "dependencies": ["."]
+}
